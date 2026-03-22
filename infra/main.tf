@@ -35,3 +35,41 @@ module "lb" {
   allow_ssh_from_cidr = var.allow_ssh_from_cidr
   tags                = var.tags
 }
+
+
+resource "azurerm_consumption_budget_resource_group" "budget" {
+  name              = "${var.prefix}-budget"
+  resource_group_id = azurerm_resource_group.rg.id
+  amount            = 10
+  time_grain        = "Monthly"
+
+  time_period {
+    start_date = "2026-03-01T00:00:00Z"
+  }
+
+  notification {
+    enabled        = true
+    threshold      = 80
+    operator       = "GreaterThan"
+    contact_emails = ["robinson.nunez-p@mail.escuelaing.edu.co"]
+  }
+}
+
+resource "azurerm_monitor_metric_alert" "probe_alert" {
+  name                = "${var.prefix}-probe-alert"
+  resource_group_name = azurerm_resource_group.rg.name
+  scopes              = [module.lb.lb_id]
+  severity            = 2
+  frequency           = "PT5M"
+  window_size         = "PT15M"
+
+  criteria {
+    metric_namespace = "Microsoft.Network/loadBalancers"
+    metric_name      = "DipAvailability"
+    aggregation      = "Average"
+    operator         = "LessThan"
+    threshold        = 100
+  }
+
+  tags = var.tags
+}

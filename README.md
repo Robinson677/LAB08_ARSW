@@ -181,6 +181,7 @@ El _workflow_ `.github/workflows/terraform.yml`:
 
 ---
 
+
 ## 📦 Entregables en TEAMS
 1. **Repositorio GitHub** del equipo con:
    - Código Terraform (módulos) y `cloud-init.yaml`.
@@ -192,6 +193,49 @@ El _workflow_ `.github/workflows/terraform.yml`:
 5. **Limpieza**: confirmar `terraform destroy` al finalizar.
 
 ---
+
+# Solución:
+
+**Nota:** Aqui se encuentran las evicencias de los entregables 1 y 3 paso por paso o ver las imagenes de evidencia rapida pero si se quiere vr explicaciones y todo a detalle en el documento LAB08_ARSW.pdf: 
+
+## 📸 Evidencias rápidas
+
+> Para el paso a paso completo ver [LAB08_ARSW.pdf](./docs/LAB08_ARSW.pdf)
+
+### Load Balancer respondiendo — lab8-vm-0
+![VM0](docs/images/lb-vm0.png)
+
+### Load Balancer respondiendo — lab8-vm-1
+![VM1](docs/images/lb-vm1.png)
+
+### Outputs de Terraform
+![Output](docs/images/terraform-output.png)
+
+### GitHub Actions — pipeline en verde
+![CI](docs/images/github-actions.png)
+
+---
+
+## Diagramas UML:
+
+### Diagrama de Componentes:
+
+![DiagramaComponentes](docs/uml/DComponentes.png)
+
+
+### Diagrama de Secuencia:
+
+![DiagramaSecuencias](docs/uml/DSecuencia.png)
+
+Link: https://lucid.app/lucidchart/4d43fa30-5c28-4e00-8e36-475817e41fbe/edit?viewport_loc=-2551%2C-991%2C2615%2C1219%2C0_0&invitationId=inv_e1e7a0f6-62a5-442d-9f1c-eaf2429514c1
+
+---
+
+## Reflexión técnica:
+[Ver en PDF documento de reflexion técnica](./docs/Reflexion.pdf)
+
+---
+
 
 ## 📊 Rúbrica (100 pts)
 - **Infra desplegada y funcional (40 pts):** LB, 2+ VMs, health probe, NSG correcto.
@@ -208,6 +252,12 @@ El _workflow_ `.github/workflows/terraform.yml`:
 - **Azure Bastion** para acceso SSH sin IP pública en VMs.
 - **Alertas** de Azure Monitor (p. ej. estado del probe) y **Budget alert**.
 - **Módulos privados** versionados con _semantic versioning_.
+
+---
+
+## Retos elegidos Alertas de Azure Monitor Budget alert y Módulos privados versionados con _semantic versioning_:
+
+[Ver en PDF documento los 2 retos realizados](./docs/retos.pdf)
 
 ---
 

@@ -93,3 +93,8 @@ resource "azurerm_network_interface_security_group_association" "nsg_assoc" {
 output "public_ip" {
   value = azurerm_public_ip.pip.ip_address
 }
+
+
+output "lb_id" {
+  value = azurerm_lb.lb.id
+}

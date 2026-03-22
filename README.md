@@ -196,11 +196,15 @@ El _workflow_ `.github/workflows/terraform.yml`:
 
 # Solución:
 
-**Nota:** Aqui se encuentran las evicencias de los entregables 1 y 3 paso por paso o ver las imagenes de evidencia rapida pero si se quiere vr explicaciones y todo a detalle en el documento LAB08_ARSW.pdf: 
+**Nota:** Aquí se encuentran las evidencias de los entregables 1 y 3 paso a paso. Para ver explicaciones detalladas consultar el documento LAB08_ARSW.pdf: 
 
 ## 📸 Evidencias rápidas
 
 > Para el paso a paso completo ver [LAB08_ARSW.pdf](./docs/LAB08_ARSW.pdf)
+
+
+### URL del Load Balancer:
+http://20.114.114.201
 
 ### Load Balancer respondiendo — lab8-vm-0
 ![VM0](docs/images/lb-vm0.png)
@@ -255,9 +259,11 @@ Link: https://lucid.app/lucidchart/4d43fa30-5c28-4e00-8e36-475817e41fbe/edit?vie
 
 ---
 
-## Retos elegidos Alertas de Azure Monitor Budget alert y Módulos privados versionados con _semantic versioning_:
+## Retos elegidos:
+1. **Alertas de Azure Monitor** (Budget alert + Monitor Metric Alert sobre el health probe)
+2. **Módulos privados versionados con semantic versioning** (versions.tf + tag v1.0.0)
 
-[Ver en PDF documento los 2 retos realizados](./docs/retos.pdf)
+[Ver en documento PDF los 2 retos realizados](./docs/retos.pdf)
 
 ---
 
@@ -270,10 +276,32 @@ terraform destroy -var-file=env/dev.tfvars
 
 ---
 
+## Hacemos el Destroy 
+
+
+![destroy1](docs/images/destroy1.png)
+
+![destroy2](docs/images/destroy2.png)
+
+---
+
 ## 🤔 Preguntas de reflexión
 - ¿Por qué L4 LB vs Application Gateway (L7) en tu caso? ¿Qué cambiaría?
+
+**RTA:** Se eligió L4 porque el lab expone un único servicio HTTP sin necesidad de enrutamiento por paths ni SSL. El LB L4 es más económico (~$18/mes vs ~$50/mes del App Gateway) y tiene menor latencia al no inspeccionar el contenido HTTP. Con Application Gateway cambiaría: se podría tener path-based routing (/app1, /app2), terminación HTTPS centralizada y WAF integrado.
+
 - ¿Qué implicaciones de seguridad tiene exponer 22/TCP? ¿Cómo mitigarlas?
+
+**RTA:** Exponer SSH directamente a Internet permite ataques de fuerza bruta y escaneo de puertos. En el lab se mitigó restringiendo el acceso a una IP específica /32 en el NSG. Para mitigarlo correctamente en producción: usar Azure Bastion acceso SSH sin IP pública en las VMs, deshabilitar el puerto 22 en el NSG, o usar Just-in-Time VM Access de Microsoft Defender.
+
+
 - ¿Qué mejoras harías si esto fuera **producción**? (resiliencia, autoscaling, observabilidad).
+
+**RTA:**
+  - **Resiliencia:** VM Scale Sets con autoscaling para escalar según carga y reemplazar VMs caídas automáticamente.
+  - **Autoscaling:** reglas basadas en CPU o métricas del LB para escalar entre 2 y 10 instancias.
+  - **Observabilidad:** Azure Monitor con dashboards de latencia, Log Analytics Workspace para centralizar logs de nginx, y alertas de disponibilidad.
+  - **Seguridad:** Azure Bastion, certificado TLS en Application Gateway, y Key Vault para secretos.
 
 ---
 

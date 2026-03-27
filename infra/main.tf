@@ -70,6 +70,5 @@ resource "azurerm_monitor_metric_alert" "probe_alert" {
     operator         = "LessThan"
     threshold        = 100
   }
-
   tags = var.tags
 }

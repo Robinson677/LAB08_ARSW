@@ -51,11 +51,13 @@ desktop.ini
 *.tgz
 *.bak
 
+
 # === Python / Aux scripts (opcional) ===
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
 
 # === Seguridad ===
 # Llaves privadas y credenciales
